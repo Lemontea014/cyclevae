@@ -1,0 +1,14 @@
+numpy
+h5py
+scipy
+scikit-learn
+soundfile
+pysptk
+pyworld
+librosa
+dtw_c
+mlpg_c
+six
+nnmnkwii
+jupyterlab
+tensorboard
