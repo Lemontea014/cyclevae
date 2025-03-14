@@ -2,11 +2,12 @@
 
 all: venv37pt1cu11/bin/activate venv37pt1cu11/lib/python3.7/site-packages/torch
 
+    
 venv37pt1cu11/bin/activate:
 
 	test -d venv37pt1cu11 || virtualenv -p python3.7 venv37pt1cu11
 
-	. venv37pt1cu11/bin/activate; pip install -r requirements.txt; pip install matplotlib;
+	. venv37pt1cu11/bin/activate; pip install Cython;pip install -r requirements.txt; pip install matplotlib;
 	touch venv37pt1cu11/bin/activate
     
 venv37pt1cu11/lib/python3.7/site-packages/torch: venv37pt1cu11/bin/activate

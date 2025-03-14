@@ -30,10 +30,10 @@ def main():
         "--feats_trg", default=None, required=True,
         help="name of the list of hdf5 files")
     parser.add_argument(
-        "--feats_src_all", default=None, required=True,
+        "--feats_src_all", default=None,
         help="name of the list of hdf5 files")
     parser.add_argument(
-        "--feats_trg_all", default=None, required=True,
+        "--feats_trg_all", default=None,
         help="name of the list of hdf5 files")
     parser.add_argument(
         "--stats", default=None, required=True,

@@ -1,4 +1,5 @@
 #!/bin/bash
+chmod -R +x ../..
 ##################################################################################################
 #          SCRIPT FOR ONE-TO-ONE ""non-PARALLEL"" VOICE CONVERSION WITH CycleVAE   　　　　　　　　　　#
 ##################################################################################################
@@ -28,7 +29,7 @@
 #######################################
 # min_idxは学習結果に応じて変えて下さい！#
 ######################################
-min_idx=62
+min_idx=99
 #stage=0
 #stage=1
 #stage=a
@@ -495,9 +496,9 @@ if [[ "${stage}" == *2* ]];then
                 --expdir exp/calculate_statistics \
                 --feats_src data/${train_src}/feats.scp \
                 --feats_trg data/${train_trg}/feats.scp \
-                --feats_src_all data/${train_trg_src}/feats.scp\
-                --feats_trg_all data/${train_src_trg}/feats.scp\
                 --stats data/${train_src}/stats_jnt.h5
+                # --feats_src_all data/${train_trg_src}/feats.scp\
+                # --feats_trg_all data/${train_src_trg}/feats.scp\
         echo "joint statistics are successfully calculated."
     fi
     echo "stage = ${stage} を実行しました"
