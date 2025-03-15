@@ -11,6 +11,12 @@ I would like to express my gratitude to the developer, P.L. Tobing.
 Thanks!
 
 ----
+## Requirements:
+- Ubuntu >= 18.04
+- python -dev >= 3.7-dev
+- CUDA 11.1
+- virtualenv
+
 ## 改良点
 1. run.shに追加学習用実行コードを追加
 2. 学習データの全体統計計算に, 話者ごとに統計を計算し, 入力に合わせて動的に正規化フィルタを変更できるように改良
