@@ -1,91 +1,67 @@
-# PyTorch Implementation of Non-Parallel Voice Conversion with CycleVAE
+# Non-Parallel Voice Conversion with CycleVAE modified by Lemon_tea014
 
 
 ----
-## Further developments
-* Many-to-Many VC with CycleVAE
-* Many-to-Many VC with CycleVQVAE
-* Spectral and excitation modeling
-* 2-dimensional speaker space for speaker interpolation
-* Waveform generation with neural vocoder
-* Mel-spectrogram modeling
-
-All further developments are moved and being integrated in the following repo: https://github.com/patrickltobing/cyclevae-vc-neuralvoco
-
+## 概要
+* https://github.com/patrickltobing/cyclevae-vc を実行可能に修正, 改良したものになります.
+* このソースコードのLICENCEは, [apache 2.0](https://www.apache.org/licenses/LICENSE-2.0) に従います.
+* [MWDLPニューラルボコーダ統合版](https://github.com/patrickltobing/cyclevae-vc-neuralvoco)
+  
+I would like to express my gratitude to the developer, P.L. Tobing.
 Thanks!
 
 ----
-## Usage
+## 改良点
+1. run.shに追加学習用実行コードを追加
+2. 学習データの全体統計計算に, 話者ごとに統計を計算し, 入力に合わせて動的に正規化フィルタを変更できるように改良
+3. 損失を可視化できるように[paper](https://arxiv.org/pdf/1907.10185)に基づくグラフ描画スクリプトを追加（Tonsorboardへの置き換えを要検討）
+4. 1epochの対象を全発話になるよう, generatorを変更
+5. スペクトル包絡に, GVポストフィルタとは別にmerlinのフォルマント強調ポストフィルタを導入
+6. logの出力方法, ライブラリのバージョン等軽微な修正
+
+## 使い方
     $cd tools
     $make
     $cd ../egs/one-to-one
 
-open run.sh
+run.sh を開く
 
-set stage=0123 for full feature extraction
+*実行するレシピをstageで設定する.*
 
     $bash run.sh
 
-*to compute speaker configs, run with stage=1, then with stage=a, then change accordingly, then run stage=1 again*
+*話者のハイパーパラメータ設定は, stage=1 を実行してからstage=a を実行し, 適宜変更してから, またstage=1 を実行してください*
 
-*computed f0 and power histograms will be stored in exp/init\_spk\_stat*
+*f0 と 波形パワーの統計ヒストグラムは, exp/init\_spk\_stat へ保存されます*
 
-set stage=4 for training
+stage=4 で, モデルの訓練を行います.
 
     $bash run.sh
 
 
 ----
-## Stage details
-STAGE 0: data list preparation
+## レシピについて
+STAGE 0: データディレクトリの作成
 
-STAGE 1: feature extraction
+STAGE 1: 特徴量抽出
 
-STAGE a: calculation of f0 and power threshold statistics for feature extraction [speaker configs are in conf/]
+STAGE a: WORLDのf0推定に用いるf0閾値, 波形パワー閾値のための統計を計算 （これらの情報はconf/ へ保存されます）
 
-STAGE 2: calculation of feature statistics for model development
+STAGE 2: 正則化フィルタのための特徴量統計を計算
 
-STAGE 3: extraction of converted excitation features for cyclic flow
+STAGE 3: 励起特徴量の線形変換を行う
 
-STAGE 4: model training
+STAGE 4: モデルの訓練を行う
 
-STAGE 5: calculation of GV statistics of converted mcep
+STAGE 5: 変換特徴量からGV（Global Variance）を計算
 
-STAGE 6: decoding and waveform conversion
+STAGE 6: WORLD Vocoderを使って波形を生成
 
-
-----
-## Trained examples
-
-Example of trained models, converted wavs, and logs can be accessed in [trained_example](http://bit.ly/309zWXc)
-which used speakers SF1 and TF1 from Voice Conversion Challenge (VCC) 2018.
-
-    $cd cyclevae-vc_trained/egs/one-to-one/
-
-open run.sh
-
-set stage=5 for GV stat calc.
-
-    $bash run.sh
-
-set stage=6 for decoding and wav conversion
-
-    $bash run.sh
-
-one of the example of model, converted wavs and logs are located in exp/tr50\_22.05k\_cyclevae\_gauss_VCC2SF1-VCC2TF1\_hl1\_hu1024\_ld32\_ks3\_ds2\_cyc2\_lr1e-4\_bs80\_wd0.0\_do0.5\_epoch500\_bsu1\_bsue1/
-
-to summarize training log, use
-
-    $sh loss_summary.sh
 
 ----
 ## Contact
-If there are any questions or problems, especially about hyperparameters and other settings, please let me know.
 
-Patrick Lumban Tobing (Patrick)
-
-patrick.lumbantobing@g.sp.m.is.nagoya-u.ac.jp
-
+irodorilemon226@gmail.com 
 
 ----
 ## Reference
